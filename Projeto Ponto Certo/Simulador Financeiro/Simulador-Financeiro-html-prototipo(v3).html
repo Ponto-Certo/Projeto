@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ponto Certo - Simulador</title>
+    <style>
+        body {margin:0;
+            background-image: url("cidade.gif");
+            background-attachment: fixed;
+            }
+        
+        ul {
+          list-style-type: none;
+          margin: 0;
+          padding: 0;
+          overflow: hidden;
+          background-color: grey;
+        }
+        
+        li {
+          float: left;
+        }
+        
+        li a {
+          display: block;
+          color: white;
+          text-align: center;
+          padding: 14px 16px;
+          text-decoration: none;
+        }
+        
+        li a:hover:not(.active) {
+          background-color: #111;
+        }
+        
+        .active {
+          background-color: rgb(48, 123, 223);
+        }
+     </style>
+</head>
+<body>
+    <ul>
+        <li><a href="#Produtos">Produtos</a></li>
+        <li><a href="#Serviços">Serviços</a></li>
+        <li><a href="#contato">Contato</a></li>
+        <li style="float:right"><a class="active" href="#Login">Login</a></li>
+      </ul>
+      
+        <div id="conteudo" style="background-color: white; width: 900px;">
+
+            <h1>Faça Simulação de quanto custaria seu Plano</h1><br>
+            <h2>Planos de sensores e analises para sua linha mais inteligente</h2> <br>           
+    
+            
+    
+            <p>
+                
+                <div id="div_regras" style="display: none">
+                    Planos para sua linha: <br><br>
+                <p id="destaca" style="background-color: rgb(4, 0, 255); color: white;"><u>Sendo R$1,000.00 cada linha<b>(valor cobrado mensalmente)</b></u></p><br><br>
+    
+                Para analise de 4 linhas até 5 linhas, desconto de 10% + valor de sensores cobrado a parte<br>
+                <b>(R$250,00 unitario)</b><br><br><br>
+    
+    
+                Para analise de 6 linhas até 9 linhas,  desconto de 15% + valor de sensores cobrado a parte<br>
+                <b>(R$245,00 unitario)</b><br><br><br>
+    
+                Para analise a partir de 10 linhas, desconto de 20% + valor de sensores cobrado a parte<br>
+                <b>(R$200,00 unitario)</b><br><br><br>
+            </div>
+                              
+                <h3>Calcule seu Investimento no plano</h3>
+
+                Insira quantidade de meses: <input type="text" id="meses">
+                Insira o numero de linhas: <input type="text" id="linhas"> <br>
+                Insira o numero de portas: <input type="text" id="sensores"> <br>
+                <b>Lembre-se que o numero de sensores é o total de portas de todos os onibus em todas as linhas</b> <br>
+                <b>4 onibus<br>
+                cada onibus 3 portas<br>
+                3 X 4 = 12 (numero de sensores)<b> <br> <br>
+
+                <button onclick="calcular()">Simular preço</button><br> <br>
+
+                <div id="resultado_simulacao"></div>
+
+                <button onclick="btn_negocio()">Regra de negócio</button> <br> <br>
+
+
+            </p>
+    
+        </div>
+      </div>
+   
+
+
+</body>
+</html>
+<script>
+    function calcular(){
+
+        var var_linhas_quantidade = Number(linhas.value);
+
+        var var_linhas = Number(linhas.value) * 1000;
+
+        var var_meses = Number(meses.value);
+        
+        var var_sensores = Number(sensores.value);
+        
+        var total_lm = var_linhas * var_meses;
+        
+        if(var_linhas_quantidade >=4 && var_linhas_quantidade < 6)
+        {
+            var resultado = total_lm + (var_sensores * 250);
+            var desconto_resultado = resultado * 0.9;
+
+            resultado_simulacao.innerHTML = `Valor sem desconto R$:${resultado.toFixed(2)}<br><br>`;
+            resultado_simulacao.innerHTML += `Valor com desconto (10%) R$:${desconto_resultado.toFixed(2)}<br><br>`;
+
+        }
+            else if (var_linhas_quantidade >= 6 && var_linhas_quantidade < 10 )
+            {
+                var resultado = total_lm + (var_sensores * 245);
+                var desconto_resultado = resultado * 0.85;
+
+                resultado_simulacao.innerHTML = `Valor sem desconto R$:${resultado.toFixed(2)} <br><br>`;
+                resultado_simulacao.innerHTML += `Valor com desconto (15%) R$:${desconto_resultado.toFixed(2)}<br><br>`;
+            }
+
+                else if(var_linhas_quantidade >= 10)
+                {
+                    var resultado = total_lm + (var_sensores * 200);
+                    var desconto_resultado = resultado * 0.80;
+
+                    resultado_simulacao.innerHTML = `Valor sem desconto R$:${resultado.toFixed(2)} <br><br>`;
+                    resultado_simulacao.innerHTML += `Valor com desconto (20%) R$:${desconto_resultado.toFixed(2)}<br><br>`;
+                }
+
+                else if (var_linhas_quantidade < 4 && var_linhas_quantidade > 0)
+                {
+                    var resultado = total_lm + (var_sensores * 250);
+                    
+
+                    resultado_simulacao.innerHTML = `Valor de R$:${resultado.toFixed(2)} <br><br>`;
+                }
+                else 
+                {
+                    alert('Insira um valor válido, confira as regras de negócio abaixo');
+                    div_regras.style.display = 'block';
+                }
+
+    }
+
+    function btn_negocio()
+    {
+        div_regras.style.display = 'block';
+    }
+
+</script>
